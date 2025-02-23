@@ -32,9 +32,10 @@ public class ChatClient {
     JFrame frame = new JFrame("Chatter");
     JTextField textField = new JTextField(40);
     JTextArea messageArea = new JTextArea(8, 40);
+    String currentUserName;
 
     // List Box
-    JToggleButton toggleButton = new JToggleButton("Broadcast Mode");
+    JCheckBox chkPointToPoint = new JCheckBox("Broadcast Mode");
     JList<String> userList = new JList<>();
     DefaultListModel<String> listModel = new DefaultListModel<>();
 
@@ -52,12 +53,12 @@ public class ChatClient {
         textField.setEditable(false);
         messageArea.setEditable(false);
         userList.setModel(listModel);
-        userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        userList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         // Logged User List and Broadcast Mode
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
-        topPanel.add(toggleButton, BorderLayout.NORTH);
+        topPanel.add(chkPointToPoint, BorderLayout.NORTH);
         topPanel.add(new JScrollPane(userList), BorderLayout.CENTER);
 
         frame.getContentPane().add(topPanel, BorderLayout.EAST);
@@ -66,11 +67,11 @@ public class ChatClient {
         frame.pack();
 
         // Switch Messaging Mode
-        toggleButton.addActionListener(e -> {
-            if (toggleButton.isSelected()) {
-                toggleButton.setText("P2P Mode");
+        chkPointToPoint.addActionListener(e -> {
+            if (chkPointToPoint.isSelected()) {
+                chkPointToPoint.setText("P2P Mode");
             } else {
-                toggleButton.setText("Broadcast Mode");
+                chkPointToPoint.setText("Broadcast Mode");
             }
         });
 
@@ -85,12 +86,15 @@ public class ChatClient {
              */
             public void actionPerformed(ActionEvent e) {
                 String message = textField.getText();
-                if(toggleButton.isSelected()){
+                // 
+                if(chkPointToPoint.isSelected()){
                     // P2P mode
-                    String recipient = userList.getSelectedValue();
+                    String recipient = String.join(",", userList.getSelectedValuesList());
+
                     if (recipient != null) {
-                        System.out.println("P2P " + recipient + ": " + message);
-                        out.println("P2P " + recipient + ": " + message);
+                        // Can send a message to the selected user
+                        System.out.println("P2P" + recipient + ":" + message);
+                        out.println("P2P" + recipient + ":" + message);
                     }else {
                         JOptionPane.showMessageDialog(frame,
                                 "Select a user from the list for P2P messaging.",
@@ -152,22 +156,30 @@ public class ChatClient {
         // TODO: You may have to extend this protocol to achieve task 9 in the lab sheet
         while (true) {
             String line = in.readLine();
+            System.out.println("Message: " + line);
+
             if (line.startsWith("SUBMITNAME")) {
-                out.println(getName());
+                // USER AUTHENTICATION
+                this.currentUserName = getName();
+                out.println(this.currentUserName);
             } else if (line.startsWith("NAMEACCEPTED")) {
+                // USER ACCEPT
                 textField.setEditable(true);
-            } else if (line.startsWith("MESSAGE")) {
-                messageArea.append(line.substring(8) + "\n");
+                
             }else if (line.startsWith("USERLIST")) {
-                // Update user list
-                String[] users = line.substring(9).split(",");
+                // UPDATE USER LIST
+                String[] users = line.substring(8).split(",");
                 listModel.clear();
                 for (String user : users) {
                     listModel.addElement(user);
                 }
+            } else if (line.startsWith("MESSAGE")) {
+                // BROADCAST
+                messageArea.append(line.substring(7) + "\n");
+
             } else if (line.startsWith("P2P")) {
                 // Display P2P message
-                messageArea.append("[P2P] " + line.substring(4) + "\n");
+                messageArea.append(line.substring(3) + "\n");
             }
         }
     }

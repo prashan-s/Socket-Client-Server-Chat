@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -140,6 +141,9 @@ public class ChatServer {
                 // Accept messages from this client and broadcast them.
                 // Ignore other clients that cannot be broadcasted to.
                 while (true) {
+
+                    System.out.println("NAME: " + name);
+
                     String message = in.readLine();
 
                     if (message == null) {
@@ -155,27 +159,39 @@ public class ChatServer {
                             writer.println("MESSAGE" + name + ": " + broadcastMessage);
                         }
                     } else if (message.startsWith("P2P")) {
+
                         // Extract recipient and message
                         int separatorIndex = message.indexOf(":");
                         if (separatorIndex > 3) {  // Check if the message is correctly formatted
-                            String recipient = message.substring(4, separatorIndex).trim();
+                            String recipientString = message.substring(3, separatorIndex).trim();
+                            String[] recipients = recipientString.split(",");
+
                             String p2pMessage = message.substring(separatorIndex + 1).trim();
 
-                            // Get the recipient's writer
-                            PrintWriter recipientWriter = userWriters.get(recipient);
-                            if (recipientWriter != null) {
-                                recipientWriter.println("P2P" + name + ": " + p2pMessage);
-                            } else {
-                                out.println("ERROR: User '" + recipient + "' not found.");
+                            if (recipients.length == 1) {
+                                out.println("MESSAGE" + name + ">>" + recipients[0] + p2pMessage);
                             }
+
+                            for (String recipient : recipients) {
+                                // Get the recipient's writer
+                                PrintWriter recipientWriter = userWriters.get(recipient);
+                                if (recipientWriter != null) {
+                                    recipientWriter.println("MESSAGE" + name + ">>" + recipient + p2pMessage);
+                                } else {
+                                    out.println("ERROR: User '" + recipient + "' not found.");
+                                }                                                                             
+                            }
+//
                         } else {
                             out.println("ERROR: Invalid P2P message format.");
                         }
+                        
                     }
                 }
             }// TODO: Handle the SocketException here to handle a client closing the socket
             catch (IOException e) {
-                System.out.println(e);
+                System.out.println("Error: " + e);
+
             } finally {
                 // This client is going down!  Remove its name and its print
                 // writer from the sets, and close its socket.
@@ -185,8 +201,9 @@ public class ChatServer {
                 }
                 if (out != null) {
                     //writers.remove(out);
-                    userWriters.remove(name);
+                    userWriters.remove(name,out);
                 }
+
                 try {
                     socket.close();
                 } catch (IOException e) {

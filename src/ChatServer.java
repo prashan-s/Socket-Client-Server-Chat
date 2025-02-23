@@ -6,7 +6,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * A multithreaded chat room server.  When a client connects the
@@ -17,14 +16,14 @@ import java.util.HashSet;
  * all messages from that client will be broadcast to all other
  * clients that have submitted a unique screen name.  The
  * broadcast messages are prefixed with "MESSAGE ".
- *
+ * <p>
  * Because this is just a teaching example to illustrate a simple
  * chat server, there are a few features that have been left out.
  * Two are very useful and belong in production code:
- *
+
  *     1. The protocol should be enhanced so that the client can
  *        send clean disconnect messages to the server.
- *
+
  *     2. The server should do some logging.
  */
 public class ChatServer {
@@ -34,7 +33,7 @@ public class ChatServer {
      */
     private static final int PORT = 9001;
 
-    /**
+    /*
      * The set of all names of clients in the chat room.  Maintained
      * so that we can check that new clients are not registering name
      * already in use.
@@ -47,7 +46,7 @@ public class ChatServer {
      */
     //private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
 
-    private static final HashMap<String, PrintWriter> userWriters = new HashMap<>();
+    private static final HashMap<String, PrintWriter> clientWriters = new HashMap<>();
     /**
      * The appplication main method, which just listens on a port and
      * spawns handler threads.
@@ -73,7 +72,7 @@ public class ChatServer {
      */
     private static class Handler implements Runnable {
         private String name;
-        private Socket socket;
+        private final Socket socket;
         private BufferedReader in;
         private PrintWriter out;
 
@@ -108,41 +107,34 @@ public class ChatServer {
                     if (name == null) {
                         return;
                     }
-                    
-                    // TODO: Add code to ensure the thread safety of the
-                    // the shared variable 'names'
-                    if (!userWriters.containsKey(name)) {
-                            userWriters.put(name, out);
+
+                    // THREAD SAFETY
+                    synchronized (clientWriters) {
+                        if (!clientWriters.containsKey(name)) {
+                            clientWriters.put(name, out);
                             break;
+                        }
                     }
-                    
+
                 }
 
                 // Now that a successful name has been chosen, add the
                 // socket's print writer to the set of all writers so
                 // this client can receive broadcast messages.
                 out.println("NAMEACCEPTED");
-                //writers.add(out);
-                userWriters.put(name, out);
 
-
-
-                // TODO: You may have to add some code here to broadcast all clients the new
                 // client's name for the task 9 on the lab sheet.
-                String userList = String.join(",", userWriters.keySet());
-                for (PrintWriter writer : userWriters.values()) {
-                    writer.println("USERLIST" + userList);
-                }
+                // BROADCAST CLIENT LIST
+                String userList = String.join(",", clientWriters.keySet());
 
-                for (PrintWriter writer : userWriters.values()) {
-                    writer.println("MESSAGE [Server]: " + name + " has joined the chat.");
-                }
+                // SEND ACTIVE CLIENT LIST TO NEWLY CONNECTED CLIENT
+                sendToAll("USERLIST" + userList);
+                // SEND CLIENT WELCOME MESSAGE
+                sendToAll("MESSAGE [Server]: " + name + " has joined the chat.");
 
                 // Accept messages from this client and broadcast them.
-                // Ignore other clients that cannot be broadcasted to.
+                // Ignore other clients that cannot be broadcast to.
                 while (true) {
-
-                    System.out.println("NAME: " + name);
 
                     String message = in.readLine();
 
@@ -150,14 +142,13 @@ public class ChatServer {
                         return;
                     }
 
-                    // TODO: Add code to send a message to a specific client and not
-                    // all clients. You may have to use a HashMap to store the sockets along 
+                    // all clients. You may have to use a HashMap to store the sockets along
                     // with the chat client names
                     if (message.startsWith("BROADCAST")) {
                         String broadcastMessage = message.substring(9).trim();
-                        for (PrintWriter writer : userWriters.values()) {
-                            writer.println("MESSAGE" + name + ": " + broadcastMessage);
-                        }
+                        // SEND MESSAGES TO ALL : BROADCAST
+                        sendToAll("MESSAGE" + name + ": " + broadcastMessage);
+
                     } else if (message.startsWith("P2P")) {
 
                         // Extract recipient and message
@@ -169,14 +160,14 @@ public class ChatServer {
                             String p2pMessage = message.substring(separatorIndex + 1).trim();
 
                             if (recipients.length == 1) {
-                                out.println("MESSAGE" + name + ">>" + recipients[0] + p2pMessage);
+                                out.println("MESSAGE" + name + ":" + recipients[0] + p2pMessage);
                             }
 
                             for (String recipient : recipients) {
                                 // Get the recipient's writer
-                                PrintWriter recipientWriter = userWriters.get(recipient);
+                                PrintWriter recipientWriter = clientWriters.get(recipient);
                                 if (recipientWriter != null) {
-                                    recipientWriter.println("MESSAGE" + name + ">>" + recipient + p2pMessage);
+                                    recipientWriter.println("MESSAGE" + name + ":" + recipient + p2pMessage);
                                 } else {
                                     out.println("ERROR: User '" + recipient + "' not found.");
                                 }                                                                             
@@ -188,21 +179,19 @@ public class ChatServer {
                         
                     }
                 }
-            }// TODO: Handle the SocketException here to handle a client closing the socket
-            catch (IOException e) {
-                System.out.println("Error: " + e);
+            } catch (SocketException e) {
+                // SOCKET EXCEPTION
+                System.out.println("Client [" + name + "] disconnected.");
+                removeCurrentUser();
+
+            } catch (IOException e) {
+                System.out.println("Error: " + e.getMessage());
+                removeCurrentUser();
 
             } finally {
                 // This client is going down!  Remove its name and its print
                 // writer from the sets, and close its socket.
-                if (name != null) {
-//                    names.remove(name);
-                    userWriters.remove(name);  // Remove from userWriters map
-                }
-                if (out != null) {
-                    //writers.remove(out);
-                    userWriters.remove(name,out);
-                }
+                removeCurrentUser();
 
                 try {
                     socket.close();
@@ -210,6 +199,25 @@ public class ChatServer {
                     e.printStackTrace();
                 }
             }
+        }
+
+        private void sendToAll(String name) {
+            for (PrintWriter writer : clientWriters.values()) {
+                writer.println(name);
+            }
+        }
+
+        private void removeCurrentUser() {
+            if (name != null) {
+//                    names.remove(name);
+                clientWriters.remove(name);  // Remove from clientWriters map
+            }
+            if (out != null) {
+                //writers.remove(out);
+                clientWriters.remove(name,out);
+            }
+
+
         }
     }
 }

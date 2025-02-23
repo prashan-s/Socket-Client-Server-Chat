@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -37,14 +38,15 @@ public class ChatServer {
      * so that we can check that new clients are not registering name
      * already in use.
      */
-    private static HashSet<String> names = new HashSet<String>();
+    //private static HashSet<String> names = new HashSet<String>();
 
     /**
      * The set of all the print writers for all the clients.  This
      * set is kept so we can easily broadcast messages.
      */
-    private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
+    //private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
 
+    private static final HashMap<String, PrintWriter> userWriters = new HashMap<>();
     /**
      * The appplication main method, which just listens on a port and
      * spawns handler threads.
@@ -91,10 +93,8 @@ public class ChatServer {
          */
         public void run() {
             try {
-
                 // Create character streams for the socket.
-                in = new BufferedReader(new InputStreamReader(
-                    socket.getInputStream()));
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintWriter(socket.getOutputStream(), true);
 
                 // Request a name from this client.  Keep requesting until
@@ -110,36 +110,67 @@ public class ChatServer {
                     
                     // TODO: Add code to ensure the thread safety of the
                     // the shared variable 'names'
-                    if (!names.contains(name)) {
-                            names.add(name);
+                    if (!userWriters.containsKey(name)) {
+                            userWriters.put(name, out);
                             break;
-                        }
+                    }
                     
-                 }
+                }
 
                 // Now that a successful name has been chosen, add the
                 // socket's print writer to the set of all writers so
                 // this client can receive broadcast messages.
                 out.println("NAMEACCEPTED");
-                writers.add(out);
-                
-                // TODO: You may have to add some code here to broadcast all clients the new
-                // client's name for the task 9 on the lab sheet. 
+                //writers.add(out);
+                userWriters.put(name, out);
 
-                
+
+
+                // TODO: You may have to add some code here to broadcast all clients the new
+                // client's name for the task 9 on the lab sheet.
+                String userList = String.join(",", userWriters.keySet());
+                for (PrintWriter writer : userWriters.values()) {
+                    writer.println("USERLIST" + userList);
+                }
+
+                for (PrintWriter writer : userWriters.values()) {
+                    writer.println("MESSAGE [Server]: " + name + " has joined the chat.");
+                }
+
                 // Accept messages from this client and broadcast them.
                 // Ignore other clients that cannot be broadcasted to.
                 while (true) {
-                    String input = in.readLine();
-                    if (input == null) {
+                    String message = in.readLine();
+
+                    if (message == null) {
                         return;
                     }
-                    
+
                     // TODO: Add code to send a message to a specific client and not
                     // all clients. You may have to use a HashMap to store the sockets along 
                     // with the chat client names
-                    for (PrintWriter writer : writers) {
-                        writer.println("MESSAGE " + name + ": " + input);
+                    if (message.startsWith("BROADCAST")) {
+                        String broadcastMessage = message.substring(9).trim();
+                        for (PrintWriter writer : userWriters.values()) {
+                            writer.println("MESSAGE" + name + ": " + broadcastMessage);
+                        }
+                    } else if (message.startsWith("P2P")) {
+                        // Extract recipient and message
+                        int separatorIndex = message.indexOf(":");
+                        if (separatorIndex > 3) {  // Check if the message is correctly formatted
+                            String recipient = message.substring(4, separatorIndex).trim();
+                            String p2pMessage = message.substring(separatorIndex + 1).trim();
+
+                            // Get the recipient's writer
+                            PrintWriter recipientWriter = userWriters.get(recipient);
+                            if (recipientWriter != null) {
+                                recipientWriter.println("P2P" + name + ": " + p2pMessage);
+                            } else {
+                                out.println("ERROR: User '" + recipient + "' not found.");
+                            }
+                        } else {
+                            out.println("ERROR: Invalid P2P message format.");
+                        }
                     }
                 }
             }// TODO: Handle the SocketException here to handle a client closing the socket
@@ -149,14 +180,17 @@ public class ChatServer {
                 // This client is going down!  Remove its name and its print
                 // writer from the sets, and close its socket.
                 if (name != null) {
-                    names.remove(name);
+//                    names.remove(name);
+                    userWriters.remove(name);  // Remove from userWriters map
                 }
                 if (out != null) {
-                    writers.remove(out);
+                    //writers.remove(out);
+                    userWriters.remove(name);
                 }
                 try {
                     socket.close();
                 } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }

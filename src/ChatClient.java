@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -6,11 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 /**
  * A simple Swing-based client for the chat server.  Graphically
@@ -35,7 +32,11 @@ public class ChatClient {
     JFrame frame = new JFrame("Chatter");
     JTextField textField = new JTextField(40);
     JTextArea messageArea = new JTextArea(8, 40);
-    // TODO: Add a list box
+
+    // List Box
+    JToggleButton toggleButton = new JToggleButton("Broadcast Mode");
+    JList<String> userList = new JList<>();
+    DefaultListModel<String> listModel = new DefaultListModel<>();
 
     /**
      * Constructs the client by laying out the GUI and registering a
@@ -50,9 +51,28 @@ public class ChatClient {
         // Layout GUI
         textField.setEditable(false);
         messageArea.setEditable(false);
-        frame.getContentPane().add(textField, "North");
-        frame.getContentPane().add(new JScrollPane(messageArea), "Center");
+        userList.setModel(listModel);
+        userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        // Logged User List and Broadcast Mode
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BorderLayout());
+        topPanel.add(toggleButton, BorderLayout.NORTH);
+        topPanel.add(new JScrollPane(userList), BorderLayout.CENTER);
+
+        frame.getContentPane().add(topPanel, BorderLayout.EAST);
+        frame.getContentPane().add(textField, BorderLayout.SOUTH);
+        frame.getContentPane().add(new JScrollPane(messageArea), BorderLayout.CENTER);
         frame.pack();
+
+        // Switch Messaging Mode
+        toggleButton.addActionListener(e -> {
+            if (toggleButton.isSelected()) {
+                toggleButton.setText("P2P Mode");
+            } else {
+                toggleButton.setText("Broadcast Mode");
+            }
+        });
 
         // TODO: You may have to edit this event handler to handle point to point messaging,
         // where one client can send a message to a specific client. You can add some header to 
@@ -64,8 +84,28 @@ public class ChatClient {
              * the text area in preparation for the next message.
              */
             public void actionPerformed(ActionEvent e) {
-                out.println(textField.getText());
+                String message = textField.getText();
+                if(toggleButton.isSelected()){
+                    // P2P mode
+                    String recipient = userList.getSelectedValue();
+                    if (recipient != null) {
+                        System.out.println("P2P " + recipient + ": " + message);
+                        out.println("P2P " + recipient + ": " + message);
+                    }else {
+                        JOptionPane.showMessageDialog(frame,
+                                "Select a user from the list for P2P messaging.",
+                                "No User Selected",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
+                }else {
+                    // Broadcast Mode
+                    System.out.println("BROADCAST" + message);
+                    out.println("BROADCAST" + message);
+                }
+
+                // Empty Text
                 textField.setText("");
+
             }
         });
         
@@ -100,7 +140,8 @@ public class ChatClient {
     private void run() throws IOException {
 
         // Make connection and initialize streams
-        String serverAddress = getServerAddress();
+        //String serverAddress = getServerAddress();
+        String serverAddress = "127.0.0.1";
         Socket socket = new Socket(serverAddress, 9001);
         in = new BufferedReader(new InputStreamReader(
             socket.getInputStream()));
@@ -117,6 +158,16 @@ public class ChatClient {
                 textField.setEditable(true);
             } else if (line.startsWith("MESSAGE")) {
                 messageArea.append(line.substring(8) + "\n");
+            }else if (line.startsWith("USERLIST")) {
+                // Update user list
+                String[] users = line.substring(9).split(",");
+                listModel.clear();
+                for (String user : users) {
+                    listModel.addElement(user);
+                }
+            } else if (line.startsWith("P2P")) {
+                // Display P2P message
+                messageArea.append("[P2P] " + line.substring(4) + "\n");
             }
         }
     }

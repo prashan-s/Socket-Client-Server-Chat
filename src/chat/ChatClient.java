@@ -1,10 +1,12 @@
+package chat;
+
+import chat.constant.ChatConstants;
+import chat.constant.ChatConstants.Config.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 import javax.swing.*;
@@ -29,7 +31,7 @@ public class ChatClient {
 
     BufferedReader in;
     PrintWriter out;
-    JFrame frame = new JFrame("Chatter");
+    JFrame frame = new JFrame(ChatConstants.Config.APP_CLIENT_NAME);
     JTextField textField = new JTextField(40);
     JTextArea messageArea = new JTextArea(8, 40);
     String currentUserName;
@@ -69,14 +71,13 @@ public class ChatClient {
         // Switch Messaging Mode
         chkPointToPoint.addActionListener(e -> {
             if (chkPointToPoint.isSelected()) {
-                chkPointToPoint.setText("P2P Mode");
+                chkPointToPoint.setText(ChatConstants.Config.APP_STRING_P2P_MODE);
             } else {
-                chkPointToPoint.setText("Broadcast Mode");
+                chkPointToPoint.setText(ChatConstants.Config.APP_STRING_BROADCAST_MODE);
             }
         });
 
-        // TODO: You may have to edit this event handler to handle point to point messaging,
-        // where one client can send a message to a specific client. You can add some header to 
+        // where one client can send a message to a specific client. You can add some header to
         // the message to identify the recipient. You can get the receipient name from the listbox.
         textField.addActionListener(new ActionListener() {
             /**
@@ -85,15 +86,18 @@ public class ChatClient {
              * the text area in preparation for the next message.
              */
             public void actionPerformed(ActionEvent e) {
-                String message = textField.getText();
-                // 
+                String input = textField.getText();
+
+                // REMOVE ANY UNWANTED CHARACTERS USERS HAS ENTERED
+                String message = sanitizeInput(input);
+
                 if(chkPointToPoint.isSelected()){
                     // P2P mode
                     String recipient = String.join(",", userList.getSelectedValuesList());
 
                     if (recipient != null) {
                         // Can send a message to the selected user
-                        System.out.println("P2P" + recipient + ":" + message);
+                        System.out.println(ChatConstants.Config. + recipient + ":" + message);
                         out.println("P2P" + recipient + ":" + message);
                     }else {
                         JOptionPane.showMessageDialog(frame,
@@ -112,8 +116,8 @@ public class ChatClient {
 
             }
         });
-        
-        
+
+
     }
 
     /**
@@ -182,6 +186,18 @@ public class ChatClient {
                 messageArea.append(line.substring(3) + "\n");
             }
         }
+
+
+
+
+    }
+
+    /**
+     * Get Sanitized Text
+     * Remove unwanted symbols and formatting
+     */
+    private static String sanitizeInput(String input) {
+        return input.replaceAll("[:]", "");
     }
 
     /**

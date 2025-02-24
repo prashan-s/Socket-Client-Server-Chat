@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a29148fc-4abb-4f55-bff6-7bfd97b87e24" name="Changes" comment="Minor Changes">
+    <list default="true" id="a29148fc-4abb-4f55-bff6-7bfd97b87e24" name="Changes" comment="Code Refactoring in ChatServer">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/ChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/ChatServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chat/ChatClient$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chat/ChatClient.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chat/ChatServer$Handler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chat/ChatServer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/constant/ChatConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/constant/ChatConstants.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +78,7 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Client 4">
+  <component name="RunManager" selected="Compound.Run Client">
     <configuration name="Client 1" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="chat.ChatClient" />
       <module name="Chat" />
@@ -144,7 +149,7 @@
       <workItem from="1740321214111" duration="3821000" />
       <workItem from="1740335533383" duration="2146000" />
       <workItem from="1740407583091" duration="304000" />
-      <workItem from="1740410410416" duration="437000" />
+      <workItem from="1740410410416" duration="734000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -194,7 +199,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740410563309</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Code Refactoring in ChatServer">
+      <option name="closed" value="true" />
+      <created>1740410869181</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1740410869181</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,7 +257,8 @@
     <MESSAGE value="Minor Changes in Multicast" />
     <MESSAGE value="Minor Refactoring" />
     <MESSAGE value="Minor Changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor Changes" />
+    <MESSAGE value="Code Refactoring in ChatServer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Code Refactoring in ChatServer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

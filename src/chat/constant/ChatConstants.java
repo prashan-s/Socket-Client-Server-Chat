@@ -21,7 +21,7 @@ public class ChatConstants {
         public static final int APP_PORT = 9001;
         public static final String APP_CLIENT_NAME = "Chatter";
         public static final String APP_STRING_BROADCAST_MODE = "Broadcast Mode";
-        public static final String APP_STRING_P2P_MODE = "Broadcast Mode";
+        public static final String APP_STRING_P2P_MODE = "P2P Mode";
 
 
     }

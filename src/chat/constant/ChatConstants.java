@@ -2,7 +2,7 @@ package chat.constant;
 
 public class ChatConstants {
 
-    public class Event {
+    public static class Event {
         // HANDSHAKE EVENTS
         public static final String E_SUBMIT_NAME = "SUBMIT_NAME";
         public static final String E_NAME_ACCEPTED = "NAME_ACCEPTED";
@@ -17,7 +17,7 @@ public class ChatConstants {
         public static final String E_ERROR = "ERROR";
     }
 
-    public class Config {
+    public static class Config {
         public static final int APP_PORT = 9001;
         public static final String APP_CLIENT_NAME = "Chatter";
         public static final String APP_STRING_BROADCAST_MODE = "Broadcast Mode";

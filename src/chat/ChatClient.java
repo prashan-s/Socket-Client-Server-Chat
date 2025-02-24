@@ -171,7 +171,7 @@ public class ChatClient {
                 
             }else if (line.startsWith(ChatConstants.Event.E_USER_LIST)) {
                 // UPDATE USER LIST
-                String[] users = line.substring(8).split(",");
+                String[] users = line.substring(9).split(",");
                 listModel.clear();
                 for (String user : users) {
                     listModel.addElement(user);

@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run Clients 3X" type="CompoundRunConfigurationType">
+    <toRun name="Client 1" type="Application" />
+    <toRun name="Client 2" type="Application" />
+    <toRun name="Client 3" type="Application" />
+    <method v="2" />
+  </configuration>
+</component>

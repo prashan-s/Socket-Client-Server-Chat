@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a29148fc-4abb-4f55-bff6-7bfd97b87e24" name="Changes" comment="Minor Bug Fixes">
+    <list default="true" id="a29148fc-4abb-4f55-bff6-7bfd97b87e24" name="Changes" comment="Fix Substring issue in client">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/ChatClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chat/chat/ChatClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chat/chat/ChatClient.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,55 +73,14 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Compound.Run Client">
-    <configuration name="Client 1" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="chat.ChatClient" />
-      <module name="Chat" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Client 2" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="chat.ChatClient" />
-      <module name="Chat" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Client 3" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="chat.ChatClient" />
-      <module name="Chat" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Client 4" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="chat.ChatClient" />
-      <module name="Chat" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Server" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="chat.ChatServer" />
-      <module name="Chat" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Run Client" type="CompoundRunConfigurationType">
-      <toRun name="Client 1" type="Application" />
-      <toRun name="Client 2" type="Application" />
-      <toRun name="Client 3" type="Application" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Application.Client 2">
     <list>
       <item itemvalue="Application.Server" />
       <item itemvalue="Application.Client 1" />
       <item itemvalue="Application.Client 2" />
       <item itemvalue="Application.Client 3" />
       <item itemvalue="Application.Client 4" />
-      <item itemvalue="Compound.Run Client" />
+      <item itemvalue="Compound.Run Clients 3X" />
     </list>
   </component>
   <component name="SharedIndexes">
@@ -144,7 +103,7 @@
       <workItem from="1740321214111" duration="3821000" />
       <workItem from="1740335533383" duration="2146000" />
       <workItem from="1740407583091" duration="304000" />
-      <workItem from="1740410410416" duration="1015000" />
+      <workItem from="1740410410416" duration="1677000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -218,7 +177,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740411384669</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Fix Substring issue in client">
+      <option name="closed" value="true" />
+      <created>1740411466755</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1740411466755</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,7 +237,8 @@
     <MESSAGE value="Code Refactoring in ChatServer" />
     <MESSAGE value="Minor Changes" />
     <MESSAGE value="Minor Bug Fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor Bug Fixes" />
+    <MESSAGE value="Fix Substring issue in client" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Substring issue in client" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -134,7 +134,7 @@ public class ChatServer {
                 broadcastActiveUserList();
 
                 // SEND CLIENT WELCOME MESSAGE
-                sendToAll("MESSAGE [Server]: " + name + " has joined the chat.");
+                sendToAll(  ChatConstants.Event.E_MESSAGE + " " + "[Server]: " + name + " has joined the chat.");
 
                 // Accept messages from this client and broadcast them.
                 // Ignore other clients that cannot be broadcast to.
@@ -151,7 +151,7 @@ public class ChatServer {
                     if (message.startsWith(ChatConstants.Event.E_BROADCAST)) {
                         String broadcastMessage = message.substring(9).trim();
                         // SEND MESSAGES TO ALL : BROADCAST
-                        sendToAll("MESSAGE " + name + ":" + broadcastMessage);
+                        sendToAll(ChatConstants.Event.E_MESSAGE + " " + name + ":" + broadcastMessage);
 
                     } else if (message.startsWith(ChatConstants.Event.E_P2P)) {
 
@@ -164,21 +164,21 @@ public class ChatServer {
                             String p2pMessage = message.substring(separatorIndex + 1).trim();
 
                             if (recipients.length == 1) {
-                                out.println("MESSAGE " + name + ":" + recipients[0] + p2pMessage);
+                                out.println(ChatConstants.Event.E_MESSAGE + " " + name + ":" + recipients[0] + p2pMessage);
                             }
 
                             for (String recipient : recipients) {
                                 // Get the recipient's writer
                                 PrintWriter recipientWriter = clientWriters.get(recipient);
                                 if (recipientWriter != null) {
-                                    recipientWriter.println("MESSAGE " + name + ":" + recipient + p2pMessage);
+                                    recipientWriter.println(ChatConstants.Event.E_MESSAGE + " " + name + ":" + recipient + p2pMessage);
                                 } else {
-                                    out.println("ERROR: User '" + recipient + "' not found.");
+                                    out.println(ChatConstants.Event.E_ERROR + " " + "User '" + recipient + "' not found.");
                                 }                                                                             
                             }
 //
                         } else {
-                            out.println("ERROR: Invalid P2P message format.");
+                            out.println(ChatConstants.Event.E_ERROR + " " + "Invalid P2P message format.");
                         }
                         
                     }
@@ -198,7 +198,7 @@ public class ChatServer {
                 // writer from the sets, and close its socket.
                 removeCurrentUser();
                 broadcastActiveUserList();
-                sendToAll("MESSAGE [Server]: " + name + " has left the chat.");
+                sendToAll(ChatConstants.Event.E_MESSAGE + " " + "[Server]: " + name + " has left the chat.");
 
                 try {
                     socket.close();
@@ -211,7 +211,7 @@ public class ChatServer {
         private void broadcastActiveUserList() {
             String userList = String.join(",", clientWriters.keySet());
             // SEND ACTIVE CLIENT LIST TO NEWLY CONNECTED CLIENT
-            sendToAll("USERLIST" + userList);
+            sendToAll(ChatConstants.Event.E_USER_LIST + userList);
         }
 
         private void sendToAll(String name) {

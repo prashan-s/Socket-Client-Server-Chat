@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a29148fc-4abb-4f55-bff6-7bfd97b87e24" name="Changes" comment="Minor Refactoring">
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/ChatClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +32,7 @@
 }]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
-    "url": "https://github.com/prashan-s/Socket-Server-Client-Chat.git",
+    "url": "https://github.com/prashan-s/Socket-Client-Server-Chat",
     "accountId": "9396a581-78fa-454c-b13a-f0d9594c890d"
   }
 }]]></component>
@@ -142,7 +144,8 @@
       <workItem from="1740305720920" duration="13789000" />
       <workItem from="1740321214111" duration="3821000" />
       <workItem from="1740335533383" duration="2146000" />
-      <workItem from="1740407583091" duration="782000" />
+      <workItem from="1740407583091" duration="304000" />
+      <workItem from="1740410410416" duration="145000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />

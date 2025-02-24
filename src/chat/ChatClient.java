@@ -97,8 +97,8 @@ public class ChatClient {
 
                     if (recipient != null) {
                         // Can send a message to the selected user
-                        System.out.println(ChatConstants.Config. + recipient + ":" + message);
-                        out.println("P2P" + recipient + ":" + message);
+                        System.out.println(ChatConstants.Event.E_P2P + recipient + ":" + message);
+                        out.println(ChatConstants.Event.E_P2P + recipient + ":" + message);
                     }else {
                         JOptionPane.showMessageDialog(frame,
                                 "Select a user from the list for P2P messaging.",
@@ -107,8 +107,8 @@ public class ChatClient {
                     }
                 }else {
                     // Broadcast Mode
-                    System.out.println("BROADCAST" + message);
-                    out.println("BROADCAST" + message);
+                    System.out.println(ChatConstants.Event.E_BROADCAST + message);
+                    out.println(ChatConstants.Event.E_BROADCAST + message);
                 }
 
                 // Empty Text
@@ -160,28 +160,27 @@ public class ChatClient {
         // TODO: You may have to extend this protocol to achieve task 9 in the lab sheet
         while (true) {
             String line = in.readLine();
-            System.out.println("Message: " + line);
 
-            if (line.startsWith("SUBMITNAME")) {
+            if (line.startsWith(ChatConstants.Event.E_SUBMIT_NAME)) {
                 // USER AUTHENTICATION
                 this.currentUserName = getName();
                 out.println(this.currentUserName);
-            } else if (line.startsWith("NAMEACCEPTED")) {
+            } else if (line.startsWith(ChatConstants.Event.E_NAME_ACCEPTED)) {
                 // USER ACCEPT
                 textField.setEditable(true);
                 
-            }else if (line.startsWith("USERLIST")) {
+            }else if (line.startsWith(ChatConstants.Event.E_USER_LIST)) {
                 // UPDATE USER LIST
                 String[] users = line.substring(8).split(",");
                 listModel.clear();
                 for (String user : users) {
                     listModel.addElement(user);
                 }
-            } else if (line.startsWith("MESSAGE")) {
+            } else if (line.startsWith(ChatConstants.Event.E_MESSAGE)) {
                 // BROADCAST
                 messageArea.append(line.substring(7) + "\n");
 
-            } else if (line.startsWith("P2P")) {
+            } else if (line.startsWith(ChatConstants.Event.E_P2P)) {
                 // Display P2P message
                 messageArea.append(line.substring(3) + "\n");
             }

@@ -25,5 +25,7 @@ public class ChatConstants {
         public static final String APP_STRING_BROADCAST_MODE = "Broadcast Mode";
         public static final String APP_STRING_P2P_MODE = "P2P Mode";
 
+        // FLAGS
+        public static final boolean DebugActive = false;
     }
 }

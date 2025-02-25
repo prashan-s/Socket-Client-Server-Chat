@@ -235,7 +235,7 @@ public class ChatServer {
 
         /**
          * Send Custom Commands
-         * @param command = formatted command
+         * @param command - formatted command
          */
         private void sendToAll(String command) {
             for (PrintWriter writer : clientWriters.values()) {

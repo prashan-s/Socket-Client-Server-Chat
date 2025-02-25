@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 
 import javax.swing.*;
 
@@ -146,47 +147,77 @@ public class ChatClient {
      * Connects to the server then enters the processing loop.
      */
     private void run() throws IOException {
-
         // Make connection and initialize streams
-        //String serverAddress = getServerAddress();
-        String serverAddress = "127.0.0.1";
-        Socket socket = new Socket(serverAddress, 9001);
-        in = new BufferedReader(new InputStreamReader(
-            socket.getInputStream()));
-        out = new PrintWriter(socket.getOutputStream(), true);
+        String serverAddress = "";
+        while (true) {
+            if (ChatConstants.Config.DebugActive) {
+                // Make Easier the Debugging
+                serverAddress = "127.0.0.1";
+            } else {
+                serverAddress = getServerAddress();
+            }
+
+            // EXIT THE APPLICATION
+            if (serverAddress == null) {
+                System.exit(0);
+            }else if (serverAddress.isEmpty()) {
+                continue;
+            }
+
+            // MAKE CONNECTION
+            try {
+                Socket socket = new Socket(serverAddress, 9001);
+                in = new BufferedReader(new InputStreamReader(
+                        socket.getInputStream()));
+                out = new PrintWriter(socket.getOutputStream(), true);
+                break;
+            } catch (SocketException e) {
+                System.out.println(e.getMessage());
+                continue;
+            }
+
+        }
 
         // Process all messages from server, according to the protocol.
         while (true) {
-            String line = in.readLine();
-
-            if (line.startsWith(ChatConstants.Event.E_SUBMIT_NAME)) {
-                // USER AUTHENTICATION
-                this.currentUserName = getName();
-                out.println(this.currentUserName);
-            } else if (line.startsWith(ChatConstants.Event.E_NAME_ACCEPTED)) {
-                // USER ACCEPT
-                textField.setEditable(true);
-                
-            }else if (line.startsWith(ChatConstants.Event.E_USER_LIST)) {
-                // UPDATE USER LIST
-                String[] users = line.substring(9).split(",");
-                listModel.clear();
-                for (String user : users) {
-                    listModel.addElement(user);
-                }
-            } else if (line.startsWith(ChatConstants.Event.E_MESSAGE)) {
-                // BROADCAST
-                messageArea.append(line.substring(7) + "\n");
-
-            } else if (line.startsWith(ChatConstants.Event.E_P2P)) {
-                // Display P2P message
-                messageArea.append(line.substring(3) + "\n");
-            } else if (line.startsWith(ChatConstants.Event.E_FORCE_EXIT)) {
-                // Force Exit The App
-                System.exit(0);
-            }
+            processEvents();
         }
 
+    }
+
+    /**
+     * Process incoming Events from the server
+     * @throws IOException - Throws Exception
+     */
+    private void processEvents() throws IOException {
+        String line = in.readLine();
+
+        if (line.startsWith(ChatConstants.Event.E_SUBMIT_NAME)) {
+            // USER AUTHENTICATION
+            this.currentUserName = getName();
+            out.println(this.currentUserName);
+        } else if (line.startsWith(ChatConstants.Event.E_NAME_ACCEPTED)) {
+            // USER ACCEPT
+            textField.setEditable(true);
+
+        }else if (line.startsWith(ChatConstants.Event.E_USER_LIST)) {
+            // UPDATE USER LIST
+            String[] users = line.substring(9).split(",");
+            listModel.clear();
+            for (String user : users) {
+                listModel.addElement(user);
+            }
+        } else if (line.startsWith(ChatConstants.Event.E_MESSAGE)) {
+            // BROADCAST
+            messageArea.append(line.substring(7) + "\n");
+
+        } else if (line.startsWith(ChatConstants.Event.E_P2P)) {
+            // Display P2P message
+            messageArea.append(line.substring(3) + "\n");
+        } else if (line.startsWith(ChatConstants.Event.E_FORCE_EXIT)) {
+            // Force Exit The App
+            System.exit(0);
+        }
     }
 
     /**

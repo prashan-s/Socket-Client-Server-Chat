@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a29148fc-4abb-4f55-bff6-7bfd97b87e24" name="Changes" comment="Minor Configurations Changes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/ChatClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/ChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/ChatServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/constant/ChatConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/constant/ChatConstants.java" afterDir="false" />
-    </list>
+    <list default="true" id="a29148fc-4abb-4f55-bff6-7bfd97b87e24" name="Changes" comment="Minor Improvements" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -109,7 +104,7 @@
       <workItem from="1740335533383" duration="2146000" />
       <workItem from="1740407583091" duration="304000" />
       <workItem from="1740410410416" duration="2372000" />
-      <workItem from="1740457534729" duration="3630000" />
+      <workItem from="1740457534729" duration="3688000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -215,7 +210,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740460791621</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Minor Improvements">
+      <option name="closed" value="true" />
+      <created>1740462269133</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1740462269133</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,7 +274,8 @@
     <MESSAGE value="Add Project Configurations" />
     <MESSAGE value="Minor Configurations" />
     <MESSAGE value="Minor Configurations Changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor Configurations Changes" />
+    <MESSAGE value="Minor Improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor Improvements" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

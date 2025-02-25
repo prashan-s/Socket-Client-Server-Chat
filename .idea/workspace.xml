@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a29148fc-4abb-4f55-bff6-7bfd97b87e24" name="Changes" comment="Add Project Configurations">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chat/chat/ChatClient$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chat/chat/ChatClient.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chat/chat/ChatServer$Handler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chat/chat/ChatServer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chat/chat/constant/ChatConstants$Config.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chat/chat/constant/ChatConstants$Event.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chat/chat/constant/ChatConstants.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/ChatClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/ChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/ChatServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/constant/ChatConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/constant/ChatConstants.java" afterDir="false" />
-    </list>
+    <list default="true" id="a29148fc-4abb-4f55-bff6-7bfd97b87e24" name="Changes" comment="Minor Configurations" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -117,7 +104,7 @@
       <workItem from="1740335533383" duration="2146000" />
       <workItem from="1740407583091" duration="304000" />
       <workItem from="1740410410416" duration="2372000" />
-      <workItem from="1740457534729" duration="2091000" />
+      <workItem from="1740457534729" duration="2235000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -207,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740412103845</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Minor Configurations">
+      <option name="closed" value="true" />
+      <created>1740460653626</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1740460653626</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -261,7 +256,8 @@
     <MESSAGE value="Minor Bug Fixes" />
     <MESSAGE value="Fix Substring issue in client" />
     <MESSAGE value="Add Project Configurations" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Project Configurations" />
+    <MESSAGE value="Minor Configurations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor Configurations" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

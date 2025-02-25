@@ -4,9 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a29148fc-4abb-4f55-bff6-7bfd97b87e24" name="Changes" comment="Fix Substring issue in client">
+    <list default="true" id="a29148fc-4abb-4f55-bff6-7bfd97b87e24" name="Changes" comment="Add Project Configurations">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chat/chat/ChatClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chat/chat/ChatClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chat/chat/ChatClient$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chat/chat/ChatClient.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chat/chat/ChatServer$Handler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chat/chat/ChatServer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chat/chat/constant/ChatConstants$Config.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chat/chat/constant/ChatConstants$Event.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chat/chat/constant/ChatConstants.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/ChatClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/ChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/ChatServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/constant/ChatConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/constant/ChatConstants.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,18 +33,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "prashan-s"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;prashan-s&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/prashan-s/Socket-Client-Server-Chat",
-    "accountId": "9396a581-78fa-454c-b13a-f0d9594c890d"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/prashan-s/Socket-Client-Server-Chat&quot;,
+    &quot;accountId&quot;: &quot;9396a581-78fa-454c-b13a-f0d9594c890d&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -65,6 +75,9 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "/Users/prashansamarathunge/Library/CloudStorage/OneDrive-SriLankaInstituteofInformationTechnology/SLIIT - Submissions/Year 3 - Semester 2/2.DS/02. Lab - 02 - Socket/lab1/ChatProject/Chat/src/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -103,7 +116,8 @@
       <workItem from="1740321214111" duration="3821000" />
       <workItem from="1740335533383" duration="2146000" />
       <workItem from="1740407583091" duration="304000" />
-      <workItem from="1740410410416" duration="1677000" />
+      <workItem from="1740410410416" duration="2372000" />
+      <workItem from="1740457534729" duration="2091000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -185,7 +199,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740411466755</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Add Project Configurations">
+      <option name="closed" value="true" />
+      <created>1740412103845</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1740412103845</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -238,7 +260,8 @@
     <MESSAGE value="Minor Changes" />
     <MESSAGE value="Minor Bug Fixes" />
     <MESSAGE value="Fix Substring issue in client" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Substring issue in client" />
+    <MESSAGE value="Add Project Configurations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Project Configurations" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -95,7 +95,7 @@ public class ChatClient {
                     // P2P mode
                     String recipient = String.join(",", userList.getSelectedValuesList());
 
-                    if (recipient != null) {
+                    if (!recipient.isEmpty()) {
                         // Can send a message to the selected user
                         System.out.println(ChatConstants.Event.E_P2P + recipient + ":" + message);
                         out.println(ChatConstants.Event.E_P2P + recipient + ":" + message);
@@ -156,8 +156,6 @@ public class ChatClient {
         out = new PrintWriter(socket.getOutputStream(), true);
 
         // Process all messages from server, according to the protocol.
-        
-        // TODO: You may have to extend this protocol to achieve task 9 in the lab sheet
         while (true) {
             String line = in.readLine();
 
@@ -183,11 +181,11 @@ public class ChatClient {
             } else if (line.startsWith(ChatConstants.Event.E_P2P)) {
                 // Display P2P message
                 messageArea.append(line.substring(3) + "\n");
+            } else if (line.startsWith(ChatConstants.Event.E_FORCE_EXIT)) {
+                // Force Exit The App
+                System.exit(0);
             }
         }
-
-
-
 
     }
 

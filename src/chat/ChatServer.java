@@ -111,10 +111,26 @@ public class ChatServer {
                 while (true) {
                     out.println(ChatConstants.Event.E_SUBMIT_NAME);
                     name = in.readLine();
+
+                    // Reject null
                     if (name == null) {
+                        // Send Close Client Command
+                        out.println(ChatConstants.Event.E_FORCE_EXIT);
                         return;
                     }
 
+                    // Reject Client
+                    if (name.equals("null")){
+                        // Send Close Client Command
+                        out.println(ChatConstants.Event.E_FORCE_EXIT);
+                        return;
+                    }
+
+                    // Reject Empty Names
+                    if (name.isEmpty()) {
+                        name = null;
+                        continue;
+                    }
                     // THREAD SAFETY
                     synchronized (clientWriters) {
                         if (!clientWriters.containsKey(name)) {
@@ -208,18 +224,28 @@ public class ChatServer {
             }
         }
 
+        /**
+         * BROADCAST ACTIVE USER LIST TO THE CONNECTED CLIENTS
+         */
         private void broadcastActiveUserList() {
             String userList = String.join(",", clientWriters.keySet());
             // SEND ACTIVE CLIENT LIST TO NEWLY CONNECTED CLIENT
             sendToAll(ChatConstants.Event.E_USER_LIST + userList);
         }
 
-        private void sendToAll(String name) {
+        /**
+         * Send Custom Commands
+         * @param command = formatted command
+         */
+        private void sendToAll(String command) {
             for (PrintWriter writer : clientWriters.values()) {
-                writer.println(name);
+                writer.println(command);
             }
         }
 
+        /**
+         * Remove Current User From User List
+         */
         private void removeCurrentUser() {
             synchronized (clientWriters) {
                 if (name != null) {
